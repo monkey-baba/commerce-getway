@@ -4,20 +4,20 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>commerce-cloud-getway</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <parent>
     <groupId>com.mbb</groupId>
     <artifactId>commerce-cloud</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <relativePath/>
   </parent>
 
   <name>Commerce Cloud Getway</name>
 
   <modules>
-    <module>commerce-zuul</module>
+    <!--<module>commerce-zuul</module>-->
     <module>commerce-apigetway</module>
-    <module>commerce-kong</module>
+    <!--<module>commerce-kong</module>-->
   </modules>
 </project>
