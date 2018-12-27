@@ -58,3 +58,11 @@ ehthumbs_vista.db
 
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
+commerce-apigetway/.settings/org.eclipse.core.resources.prefs
+commerce-apigetway/.settings/org.eclipse.jdt.core.prefs
+commerce-apigetway/.settings/org.eclipse.m2e.core.prefs
+commerce-apigetway/.project
+.settings/org.eclipse.core.resources.prefs
+.settings/org.eclipse.m2e.core.prefs
+.project
+commerce-apigetway/.classpath

@@ -1,0 +1,298 @@
+# xiaoc
+logging:
+  level:
+    org.springframework.cloud.gateway: TRACE
+    org.springframework.http.server.reactive: DEBUG
+    org.springframework.web.reactive: DEBUG
+    reactor.ipc.netty: DEBUG
+    
+server:
+  port: 8081
+spring:
+  application:
+    name: spring-cloud-gateway
+  profiles:
+    active: between_route
+
+---
+#匹配指定时间之后的请求
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: after_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - After=2018-01-20T17:42:47.789-07:00[America/Denver]
+  profiles: after_route
+
+---
+#匹配指定时间之前的请求
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: before_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - Before=2019-01-20T17:42:47.789-07:00[America/Denver]
+  profiles: before_route
+
+---
+#匹配时间为参数1之后，参数2之前的请求
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: between_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - Between=2017-01-20T17:42:47.789-07:00[America/Denver], 2020-01-21T17:42:47.789-07:00[America/Denver]
+  profiles: between_route
+
+---
+#匹配Cookie name=name，value=forezp的请求
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: cookie_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - Cookie=name, forezp
+  profiles: cookie_route
+
+---
+#匹配请求头为key=X-Request-Id，value=\d+ 表达式的请求
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: header_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - Header=X-Request-Id, \d+
+  profiles: header_route
+
+---
+#匹配请求头的 Host值
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: host_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - Host=**.xiaoc.com
+  profiles: host_route
+
+---
+#匹配请求方式为GET的
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: method_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - Method=GET
+  profiles: method_route
+
+---
+#匹配指定的路径
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: path_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - Path=/foo/{segment}
+  profiles: path_route
+
+---
+#匹配参数key=foo,value=ba. (正则表达式)
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: query_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - Query=foo, ba.
+  profiles: query_route
+
+---
+#匹配请求的ip地址
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: remoteaddr_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - RemoteAddr=192.168.1.1/24
+  profiles: remoteaddr_route
+
+---
+#指定时间之后，过滤器中添加请求头
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: add_request_header_route
+        uri: http://httpbin.org:80/get
+        filters:
+        - AddRequestHeader=X-Request-Foo, Bar
+        predicates:
+        - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+  profiles: add_request_header_route
+
+---
+#过滤器中添加请求参数
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id:add_request_parameter_route
+        uri:http：//httpbin.org:80/get
+        filters:
+        - AddRequestParameter=Foo, bar
+        predicates:
+        - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+  profiles: add_request_parameter_route
+
+---
+#过滤器中添加响应头
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: add_response_header_route
+        uri: http://httpbin.org:80/get
+        filters:
+        - AddResponseHeader=X-Response-Foo, Bar1
+        predicates:
+        - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+  profiles: add_response_header_route
+
+---
+#指定fallbackcmd指令的超时时间
+hystrix.command.fallbackcmd.execution.isolation.thread.timeoutInMilliseconds: 5000
+#过滤器中添加Hystrix，回退策略，回退url为forward:/fallback
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: hystrix_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - Path=/qwe
+        filters:
+        - name: Hystrix
+          args:
+            name: fallbackcmd
+            fallbackUri: forward:/fallback
+  profiles: hystrix_route
+
+---
+#中过滤器中添加前戳
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: prefixpath_route
+        uri: http://httpbin.org:80/get
+        filters:
+        - PrefixPath=/mypath
+  profiles: prefixpath_route
+
+---
+#把原始请求的host头部带上，转发给目标服务。默认该filter是启用的。
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: preserve_host_route
+        uri: http://httpbin.org:80/get
+        filters:
+        - PreserveHostHeader
+  profiles: preserve_host_route
+
+---
+#过滤器中将url /foo/(?<segment>.*)改成/$\{segment}
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: rewritepath_route
+        uri: https://blog.csdn.net
+        predicates:
+        - Path=/foo/**
+        filters:
+        - RewritePath=/foo/(?<segment>.*), /$\{segment}
+  profiles: rewritepath_route
+
+---
+#自定义过滤器工厂
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: request_time_route
+        uri: http://httpbin.org:80/get
+        filters:
+        - RequestTime=true
+        predicates:
+        - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+  profiles: request_time_route
+
+---
+#过滤器令牌桶算法限流
+spring:
+  cloud:
+    gateway:
+      routes:
+      - id: limit_route
+        uri: http://httpbin.org:80/get
+        predicates:
+        - After=2017-01-20T17:42:47.789-07:00[America/Denver]
+        filters:
+        - name: RequestRateLimiter
+          args:
+            key-resolver: '#{@hostAddrKeyResolver}'
+            redis-rate-limiter.replenishRate: 2
+            redis-rate-limiter.burstCapacity: 4
+  application:
+    name: gateway-limiter
+  redis:
+    host: localhost
+    port: 6379
+    database: 0
+  profiles: limit_route
+
+---
+#服务注册
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+          lowerCaseServiceId: true
+      routes:
+      - id: service-hi
+        uri: lb://SERVICE-HI
+        predicates:
+          - Path=/demo/**
+        filters:
+          - StripPrefix=1
+          - RequestTime=true
+  profiles: enable_eureka_client
+
+
