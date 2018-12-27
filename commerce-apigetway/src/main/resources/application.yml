@@ -12,7 +12,7 @@ spring:
   application:
     name: spring-cloud-gateway
   profiles:
-    active: between_route
+    active: after_route
 
 ---
 #匹配指定时间之后的请求
@@ -154,8 +154,8 @@ spring:
   cloud:
     gateway:
       routes:
-      - id:add_request_parameter_route
-        uri:http：//httpbin.org:80/get
+      - id: add_request_parameter_route
+        uri: http：//httpbin.org:80/get
         filters:
         - AddRequestParameter=Foo, bar
         predicates:
@@ -295,4 +295,4 @@ spring:
           - RequestTime=true
   profiles: enable_eureka_client
 
-
+  
