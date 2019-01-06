@@ -15,8 +15,8 @@
   <name>Commerce Cloud Getway</name>
 
   <modules>
-    <!--<module>commerce-zuul</module>-->
-    <module>commerce-apigetway</module>
+    <module>commerce-zuul</module>
+    <!--<module>commerce-apigetway</module>-->
     <!--<module>commerce-kong</module>-->
   </modules>
 </project>

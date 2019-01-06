@@ -4,17 +4,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>commerce-zuul</artifactId>
-  <packaging>pom</packaging>
+  <version>1.0.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
   <parent>
     <groupId>com.mbb</groupId>
-    <artifactId>commerce-cloud</artifactId>
+    <artifactId>commerce-cloud-getway</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <relativePath/>
   </parent>
 
   <name>Commerce Cloud Zuul</name>
 
-  <modules>
-  </modules>
 </project>
