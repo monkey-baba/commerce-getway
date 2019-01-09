@@ -16,6 +16,22 @@
 
   <name>Commerce Cloud Zuul</name>
 
+
+  <!--Define Custom Repository-->
+  <repositories>
+    <repository>
+      <id>mvn</id>
+      <url>http://116.247.124.34:8081/artifactory/libs-release/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
