@@ -1,4 +1,6 @@
 ---
+logging:
+  file: app.log
 spring:
   cloud:
     nacos:
