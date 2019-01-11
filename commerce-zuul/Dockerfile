@@ -7,6 +7,6 @@ WORKDIR /app
 
 RUN mvn clean package -U -DskipTests
 
-ENV JAVA_OPTS=-Xmx256M -Xms256M -Djava.security.egd=file:/dev/./urandom
+ENV JAVA_OPTS='-Xmx256M -Xms256M'
 
 ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app/target/*.jar"]
