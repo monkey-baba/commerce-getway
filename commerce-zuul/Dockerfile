@@ -8,6 +8,6 @@ WORKDIR /app
 RUN mvn clean package -U -DskipTests
 
 
-ENTRYPOINT ["java", "-jar", "$JAVA_OPTS -Djava.security.egd=file:/dev/./urandom"]
+ENTRYPOINT ["java", "$JAVA_OPTS -Djava.security.egd=file:/dev/./urandom", "-jar"]
 
 CMD ["target/*.jar"]
