@@ -1,6 +1,8 @@
 ---
 logging:
   file: app.log
+  level:
+    com.alibaba.nacos.client.naming: WARN
 spring:
   cloud:
     nacos:
