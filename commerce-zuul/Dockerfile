@@ -1,4 +1,4 @@
-FROM zqiannnn/commerce-suit-base:20190111
+FROM zqiannnn/commerce-suit-base:20190116
 MAINTAINER ZQian<zqiannnn@gmail.com>
 
 COPY . /app/
