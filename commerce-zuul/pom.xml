@@ -36,6 +36,7 @@
   </repositories>
 
 
+
   <dependencies>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
@@ -53,10 +54,6 @@
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>org.jfrog.buildinfo</groupId>
-        <artifactId>artifactory-maven-plugin</artifactId>
-      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
